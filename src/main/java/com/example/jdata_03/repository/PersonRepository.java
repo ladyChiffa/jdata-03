@@ -1,23 +1,17 @@
 package com.example.jdata_03.repository;
 
 import com.example.jdata_03.entity.Person;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class PersonRepository {
-    @PersistenceContext
-    EntityManager entityManager;
+public interface PersonRepository extends JpaRepository<Person, Integer> {
+    // CrudRepository уже предоставляет методы CRUD
 
-    public List<Person> getByCity(String city) {
-        return entityManager.createQuery(
-                        "SELECT p FROM Person p WHERE city_of_living = :city",
-                        Person.class)
-                .setParameter("city", city)
-                .getResultList();
-    }
+    public List<Person> findByCityOfLiving(String cityOfLiving);
+    public List<Person> findByAgeLessThan(int age);
+    public Optional<Person> findByNameAndSurname(String name, String surname);
 }
