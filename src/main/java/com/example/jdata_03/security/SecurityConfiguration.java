@@ -56,7 +56,8 @@ public class SecurityConfiguration {
         users.add(User.builder()
                 .username("kassandra")
                 .password(encoder().encode("123456"))
-                .roles("read", "write")
+                .roles("read", "write")       // это роли!!!
+                .authorities("read", "write") // это не роли!!!
                 .build());
         return new InMemoryUserDetailsManager(users);
     }
